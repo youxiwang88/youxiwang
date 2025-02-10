@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>图片浏览页面</title>
+    <style>
+        body {
+            background-color: pink;
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            max-width: 1200px;
+        }
+
+        .main-column {
+            flex: 2;
+            margin-right: 20px;
+        }
+
+        .sidebar {
+            flex: 1;
+        }
+
+        .image-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+
+        .image {
+            margin: 5px;
+            border: 2px solid white;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+            width: 30%;
+            height: 0;
+            padding-bottom: 30%;
+            position: relative;
+        }
+
+        .image img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 10px;
+        }
+
+        .sidebar .image-box {
+            position: relative;
+            margin-bottom: 20px;
+            flex: 1;
+            margin-right: 10px;
+        }
+
+        .sidebar img {
+            width: 100%;
+            border: 2px solid white;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .sidebar .image-title {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: white;
+            font-size: 24px;
+            font-weight: bold;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        .sidebar a {
+            text-decoration: none;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+            }
+
+            .main-column,
+            .sidebar {
+                flex: 1;
+                margin-right: 0;
+            }
+
+            .sidebar .image-box {
+                margin-right: 0;
+            }
+
+            .image-row {
+                flex-direction: column;
+            }
+
+            .sidebar .image-box {
+                margin-bottom: 10px;
+            }
+
+            .image {
+                width: 48%;
+                padding-bottom: 48%;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .image {
+                width: 100%;
+                padding-bottom: 100%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="main-column">
+            <h1>图片浏览</h1>
+            <div id="image-container"></div>
+        </div>
+        <div class="sidebar">
+            <div id="sidebar-container">
+                <div class="image-row">
+                    <div class="image-box">
+                        <a href="链接1" target="_blank">
+                            <img src="/langnvba/image/图集1/102.jpg" alt="Sidebar Image 1">
+                            <div class="image-title">日本</div>
+                        </a>
+                    </div>
+                    <div class="image-box">
+                        <a href="链接2" target="_blank">
+                            <img src="/langnvba/image/图集1/426.jpg" alt="Sidebar Image 2">
+                            <div class="image-title">诱惑</div>
+                        </a>
+                    </div>
+                </div>
+                <div class="image-row">
+                    <div class="image-box">
+                        <a href="链接3" target="_blank">
+                            <img src="/langnvba/image/图集1/569.jpg" alt="Sidebar Image 3">
+                            <div class="image-title">透明</div>
+                        </a>
+                    </div>
+                    <div class="image-box">
+                        <a href="链接4" target="_blank">
+                            <img src="/langnvba/image/图集1/338.jpg" alt="Sidebar Image 4">
+                            <div class="image-title">纯欲</div>
+                        </a>
+                    </div>
+                </div>
+                <div class="image-row">
+                    <div class="image-box">
+                        <a href="链接5" target="_blank">
+                            <img src="/langnvba/image/图集1/111.jpg" alt="Sidebar Image 5">
+                            <div class="image-title">丝袜</div>
+                        </a>
+                    </div>
+                    <div class="image-box">
+                        <a href="链接6" target="_blank">
+                            <img src="/langnvba/image/图集1/315.jpg" alt="Sidebar Image 6">
+                            <div class="image-title">情趣</div>
+                        </a>
+                    </div>
+                </div>
+                <div class="image-row">
+                    <div class="image-box">
+                        <a href="链接5" target="_blank">
+                            <img src="/langnvba/image/图集1/241.jpg" alt="Sidebar Image 7">
+                            <div class="image-title">巨乳</div>
+                        </a>
+                    </div>
+                    <div class="image-box">
+                        <a href="链接6" target="_blank">
+                            <img src="/langnvba/image/图集1/530.jpg" alt="Sidebar Image 8">
+                            <div class="image-title">童颜</div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 图片文件夹路径
+        const imageFolderPath = '../image/铁打萌萌moi_–_恶毒_[16P]_–_小姐姐/';
+
+        // 密码验证
+        const correctPassword = "123333ab"; // 设置你的密码
+
+        function checkPassword() {
+            const password = prompt("请输入密码：");
+            if (password === correctPassword) {
+                loadImages();
+            } else {
+                alert("密码错误，请重试。");
+                checkPassword(); // 重新提示输入密码
+            }
+        }
+
+        // 获取图片文件夹中的所有图片
+        function loadImages() {
+            // 生成从 1.jpg 到 55.jpg 的数组
+            const imageNames = [];
+            for (let i = 1; i <= 16; i++) {
+                imageNames.push(`${i}.jpg`);
+            }
+
+            const imageContainer = document.getElementById('image-container');
+
+            // 主栏图片分2列显示
+            for (let i = 0; i < imageNames.length; i += 2) {
+                const row = document.createElement('div');
+                row.className = 'image-row';
+
+                for (let j = 0; j < 2 && (i + j) < imageNames.length; j++) {
+                    const imageBox = document.createElement('div');
+                    imageBox.className = 'image';
+
+                    const imgElement = document.createElement('img');
+                    imgElement.src = imageFolderPath + imageNames[i + j];
+                    imgElement.alt = imageNames[i + j];
+                    imgElement.dataset.index = i + j; // 设置图片的索引
+
+                    imgElement.addEventListener('click', function () {
+                        openPreview(imageNames, this.dataset.index);
+                    });
+
+                    imageBox.appendChild(imgElement);
+                    row.appendChild(imageBox);
+                }
+
+                imageContainer.appendChild(row);
+            }
+        }
+
+        // 打开图片预览
+        function openPreview(imageNames, startIndex) {
+            const previewContainer = document.createElement('div');
+            previewContainer.style.position = 'fixed';
+            previewContainer.style.top = '0';
+            previewContainer.style.left = '0';
+            previewContainer.style.width = '100%';
+            previewContainer.style.height = '100%';
+            previewContainer.style.backgroundColor = 'rgba(0, 0, 0, 0.8)';
+            previewContainer.style.display = 'flex';
+            previewContainer.style.justifyContent = 'center';
+            previewContainer.style.alignItems = 'center';
+            previewContainer.style.zIndex = '1000';
+
+            const imgElement = document.createElement('img');
+            imgElement.src = imageFolderPath + imageNames[startIndex];
+            imgElement.style.maxWidth = '90%';
+            imgElement.style.maxHeight = '90%';
+            imgElement.style.borderRadius = '10px';
+
+            const leftArrow = document.createElement('div');
+            leftArrow.style.position = 'absolute';
+            leftArrow.style.top = '50%';
+            leftArrow.style.left = '20px';
+            leftArrow.style.color = 'purple';
+            leftArrow.style.fontSize = '2em';
+            leftArrow.style.cursor = 'pointer';
+            leftArrow.innerHTML = '&#9664;'; // 左箭头
+            leftArrow.addEventListener('click', function (event) {
+                event.stopPropagation();
+                if (startIndex > 0) {
+                    startIndex--;
+                    imgElement.src = imageFolderPath + imageNames[startIndex];
+                }
+            });
+
+            const rightArrow = document.createElement('div');
+            rightArrow.style.position = 'absolute';
+            rightArrow.style.top = '50%';
+            rightArrow.style.right = '20px';
+            rightArrow.style.color = 'purple';
+            rightArrow.style.fontSize = '2em';
+            rightArrow.style.cursor = 'pointer';
+            rightArrow.innerHTML = '&#9654;'; // 右箭头
+            rightArrow.addEventListener('click', function (event) {
+                event.stopPropagation();
+                if (startIndex < imageNames.length - 1) {
+                    startIndex++;
+                    imgElement.src = imageFolderPath + imageNames[startIndex];
+                } else {
+                    alert('最后一张');
+                }
+            });
+
+            previewContainer.appendChild(imgElement);
+            previewContainer.appendChild(leftArrow);
+            previewContainer.appendChild(rightArrow);
+            document.body.appendChild(previewContainer);
+
+            previewContainer.addEventListener('click', function () {
+                document.body.removeChild(previewContainer);
+            });
+        }
+
+        // 页面加载时检查密码
+        window.onload = checkPassword;
+    </script>
+</body>
+
+</html>
